@@ -1,0 +1,2 @@
+> {"jsonrpc":"2.0","id":1,"method":"eth_sendBundle","params":[{"txs":["0x00","0x01"],"blockNumber":"0x98967f"}]}
+< {"jsonrpc":"2.0","id":1,"result":{"bundleHash":"0x2228f5d8954ce31dc1601a8ba264dbd401bf1428388ce88238932815c5d6f23f"}}
