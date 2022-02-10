@@ -1,6 +1,7 @@
 # flashbots ⚡🤖
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/lmittmann/flashbots.svg)](https://pkg.go.dev/github.com/lmittmann/flashbots)
+[![Go Report Card](https://goreportcard.com/badge/github.com/lmittmann/flashbots)](https://goreportcard.com/report/github.com/lmittmann/flashbots)
 
 Package flashbots implements RPC API bindings for the Flashbots relay and
 [mev-geth](https://github.com/flashbots/mev-geth) for use with the [`w3`](https://github.com/lmittmann/w3)
