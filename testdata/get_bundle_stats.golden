@@ -1,0 +1,2 @@
+> {"jsonrpc":"2.0","id":1,"method":"flashbots_getBundleStats","params":[{"bundleHash":"0x2228f5d8954ce31dc1601a8ba264dbd401bf1428388ce88238932815c5d6f23f","blockNumber":"0x3b9ac9ff"}]}
+< {"jsonrpc":"2.0","id":1,"result":{"isSimulated":true,"isSentToMiners":true,"isHighPriority":true,"simulatedAt":"2021-08-06T21:36:06.317Z","submittedAt":"2021-08-06T21:36:06.250Z","sentToMinersAt":"2021-08-06T21:36:06.343Z"}}
