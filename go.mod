@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/ethereum/go-ethereum v1.10.16
 	github.com/google/go-cmp v0.5.7
-	github.com/lmittmann/w3 v0.4.1
+	github.com/lmittmann/w3 v0.5.0
 )
 
 require (
