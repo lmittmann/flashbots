@@ -40,7 +40,7 @@ defer client.Close()
 
 // Send bundle
 var (
-    // list of signed transactions
+	// list of signed transactions
 	bundle types.Transactions
 
 	bundleHash common.Hash
