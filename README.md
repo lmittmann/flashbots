@@ -67,7 +67,7 @@ more than one request in `Client.Call` will result in a server error.
 List of supported RPC methods:
 
 Method                     | Go Code
----------------------------|---------
+:--------------------------|:--------
 `eth_sendBundle`           | `flashbots.SendBundle(param *flashbots.SendBundleParam).Returns(bundleHash *common.Hash)`
 `eth_callBundle`           | TODO <!-- `flashbots.CallBundle(param *flashbots.CallBundleParam).Returns(resp *flashbots.CallBundleResponse)` -->
 `flashbots_getUserStats`   | `flashbots.UserStats(blockNumber *big.Int).Returns(resp *flashbots.UserStatsResponse)`

@@ -28,7 +28,7 @@ type userStatsResponseMarshaling struct {
 	Last1dGasSimulated   *strBigint
 }
 
-// UserStats requests the users Flashbots realy stats. The given block number
+// UserStats requests the users Flashbots relay stats. The given block number
 // must be within 20 blocks of the current chain tip.
 func UserStats(blockNumber *big.Int) *UserStatsFactory {
 	return &UserStatsFactory{blockNumber: blockNumber}
