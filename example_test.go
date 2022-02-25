@@ -39,7 +39,7 @@ func Example() {
 		bundleHash common.Hash
 	)
 	err = client.Call(
-		flashbots.SendBundle(&flashbots.SendBundleParam{
+		flashbots.SendBundle(&flashbots.SendBundleRequest{
 			Transactions: bundle,
 			BlockNumber:  big.NewInt(999_999_999),
 		}).Returns(&bundleHash),

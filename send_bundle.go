@@ -1,4 +1,3 @@
-//go:generate gencodec -type SendBundleParam -field-override sendBundleMarshaling -out send_bundle.gen.go
 package flashbots
 
 import (
@@ -11,38 +10,63 @@ import (
 	"github.com/ethereum/go-ethereum/rpc"
 )
 
-type SendBundleParam struct {
-	Transactions      types.Transactions `json:"-"`                               // List of signed transactions to execute in a bundle.
-	RawTransactions   [][]byte           `json:"txs"         gencodec:"required"` // List of signed raw transactions to execute in a bundle.
-	BlockNumber       *big.Int           `json:"blockNumber" gencodec:"required"` // Block number for which the bundle is valid
-	MinTimestamp      *big.Int           `json:"minTimestamp,omitempty"`          // Minimum Unix Timestamp for which the bundle is valid
-	MaxTimestamp      *big.Int           `json:"maxTimestamp,omitempty"`          // Maximum Unix Timestamp for which the bundle is valid
-	RevertingTxHashes []common.Hash      `json:"revertingTxHashes,omitempty"`     // List of tx hashes in bundle that are allowed to revert.
+type SendBundleRequest struct {
+	Transactions      types.Transactions // List of signed transactions to execute in a bundle.
+	RawTransactions   [][]byte           // List of signed raw transactions to execute in a bundle.
+	BlockNumber       *big.Int           // Block number for which the bundle is valid
+	MinTimestamp      *big.Int           // Minimum Unix Timestamp for which the bundle is valid
+	MaxTimestamp      *big.Int           // Maximum Unix Timestamp for which the bundle is valid
+	RevertingTxHashes []common.Hash      // List of tx hashes in bundle that are allowed to revert.
 }
 
-type sendBundleMarshaling struct {
-	RawTransactions   []hexutil.Bytes
-	BlockNumber       *hexutil.Big
-	MinTimestamp      *hexutil.Big
-	MaxTimestamp      *hexutil.Big
-	RevertingTxHashes []common.Hash
+type sendBundleRequest struct {
+	RawTransactions   []hexutil.Bytes `json:"txs"`
+	BlockNumber       *hexutil.Big    `json:"blockNumber"`
+	MinTimestamp      *hexutil.Big    `json:"minTimestamp,omitempty"`
+	MaxTimestamp      *hexutil.Big    `json:"maxTimestamp,omitempty"`
+	RevertingTxHashes []common.Hash   `json:"revertingTxHashes,omitempty"`
 }
 
-type sendBundleResultMarshaling struct {
+func (s SendBundleRequest) MarshalJSON() ([]byte, error) {
+	var enc sendBundleRequest
+
+	if len(s.Transactions) > 0 {
+		enc.RawTransactions = make([]hexutil.Bytes, len(s.Transactions))
+		for i, tx := range s.Transactions {
+			rawTx, err := tx.MarshalBinary()
+			if err != nil {
+				return nil, err
+			}
+			enc.RawTransactions[i] = rawTx
+		}
+	} else {
+		enc.RawTransactions = make([]hexutil.Bytes, len(s.RawTransactions))
+		for i, rawTx := range s.RawTransactions {
+			enc.RawTransactions[i] = rawTx
+		}
+	}
+	enc.BlockNumber = (*hexutil.Big)(s.BlockNumber)
+	enc.MinTimestamp = (*hexutil.Big)(s.MinTimestamp)
+	enc.MaxTimestamp = (*hexutil.Big)(s.MaxTimestamp)
+	enc.RevertingTxHashes = s.RevertingTxHashes
+	return json.Marshal(&enc)
+}
+
+type sendBundleResponse struct {
 	BundleHash common.Hash `json:"bundleHash"`
 }
 
 // SendBundle sends a bundle to the network.
-func SendBundle(param *SendBundleParam) *SendBundleFactory {
+func SendBundle(param *SendBundleRequest) *SendBundleFactory {
 	return &SendBundleFactory{param: param}
 }
 
 type SendBundleFactory struct {
 	// args
-	param *SendBundleParam
+	param *SendBundleRequest
 
 	// returns
-	result  sendBundleResultMarshaling
+	result  sendBundleResponse
 	returns *common.Hash
 }
 
@@ -53,25 +77,9 @@ func (f *SendBundleFactory) Returns(hash *common.Hash) *SendBundleFactory {
 
 // CreateRequest implements the w3/core.RequestCreator interface.
 func (f *SendBundleFactory) CreateRequest() (rpc.BatchElem, error) {
-	if lenTx := len(f.param.Transactions); lenTx > 0 {
-		f.param.RawTransactions = make([][]byte, lenTx)
-		for i, tx := range f.param.Transactions {
-			rawTx, err := tx.MarshalBinary()
-			if err != nil {
-				return rpc.BatchElem{}, err
-			}
-			f.param.RawTransactions[i] = rawTx
-		}
-	}
-
-	rawJson, err := f.param.MarshalJSON()
-	if err != nil {
-		return rpc.BatchElem{}, err
-	}
-
 	return rpc.BatchElem{
 		Method: "eth_sendBundle",
-		Args:   []interface{}{json.RawMessage(rawJson)},
+		Args:   []interface{}{f.param},
 		Result: &f.result,
 	}, nil
 }

@@ -19,7 +19,7 @@ func TestSendBundle(t *testing.T) {
 	defer client.Close()
 
 	var (
-		sendBundleParam = SendBundleParam{
+		sendBundleParam = SendBundleRequest{
 			RawTransactions: [][]byte{w3.B("0x00"), w3.B("0x01")},
 			BlockNumber:     big.NewInt(9_999_999),
 		}
