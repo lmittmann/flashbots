@@ -27,6 +27,7 @@ type sendBundleRequest struct {
 	RevertingTxHashes []common.Hash   `json:"revertingTxHashes,omitempty"`
 }
 
+// MarshalJSON implements the json.Marshaler interface.
 func (s SendBundleRequest) MarshalJSON() ([]byte, error) {
 	var enc sendBundleRequest
 
@@ -56,9 +57,9 @@ type sendBundleResponse struct {
 	BundleHash common.Hash `json:"bundleHash"`
 }
 
-// SendBundle sends a bundle to the network.
-func SendBundle(param *SendBundleRequest) *SendBundleFactory {
-	return &SendBundleFactory{param: param}
+// SendBundle sends the bundle to the client's endpoint.
+func SendBundle(r *SendBundleRequest) *SendBundleFactory {
+	return &SendBundleFactory{param: r}
 }
 
 type SendBundleFactory struct {

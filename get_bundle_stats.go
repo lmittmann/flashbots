@@ -9,18 +9,18 @@ import (
 	"github.com/ethereum/go-ethereum/rpc"
 )
 
-type bundleStatMarshaling struct {
+type bundleStatsRequest struct {
 	BundleHash  common.Hash  `json:"bundleHash"`
 	BlockNumber *hexutil.Big `json:"blockNumber"`
 }
 
 type BundleStatsResponse struct {
-	IsSimulated    bool      `json:"isSimulated"`
-	IsSentToMiners bool      `json:"isSentToMiners"`
-	IsHighPriority bool      `json:"isHighPriority"`
-	SimulatedAt    time.Time `json:"simulatedAt"`
-	SubmittedAt    time.Time `json:"submittedAt"`
-	SentToMinersAt time.Time `json:"sentToMinersAt"`
+	IsSimulated    bool
+	IsSentToMiners bool
+	IsHighPriority bool
+	SimulatedAt    time.Time
+	SubmittedAt    time.Time
+	SentToMinersAt time.Time
 }
 
 // BundleStats requests the bundles Flashbots relay stats. The given block
@@ -48,7 +48,7 @@ func (f *BundleStatsFactory) Returns(bundleStats *BundleStatsResponse) *BundleSt
 func (f *BundleStatsFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "flashbots_getBundleStats",
-		Args: []interface{}{&bundleStatMarshaling{
+		Args: []interface{}{&bundleStatsRequest{
 			BundleHash:  f.bundleHash,
 			BlockNumber: (*hexutil.Big)(f.blockNumber),
 		}},
