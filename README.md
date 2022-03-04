@@ -17,45 +17,41 @@ go get github.com/lmittmann/flashbots
 
 ## Getting Started
 
-Connect to the Flashbots relay and send a bundle.
+Connect to the Flashbots relay. The [`AuthTransport`](https://pkg.go.dev/github.com/lmittmann/flashbots#AuthTransport)
+adds the `X-Flashbots-Signature` header to every request from the client.
 
 ```go
 // Private key for request authentication
 var privKey *ecdsa.PrivateKey
 
-// Connect to relay
+// Connect to Flashbots relay
 rpcClient, err := rpc.DialHTTPWithClient(
 	"https://relay.flashbots.net",
 	&http.Client{
 		Transport: flashbots.AuthTransport(privKey),
 	},
 )
-if err != nil {
-	fmt.Printf("Failed to connect to Flashbots relay: %v\n", err)
-	return
-}
 
+// Create w3 client form rpc client
 client := w3.NewClient(rpcClient)
 defer client.Close()
+```
 
-// Send bundle
+Send a bundle to the Flashbots relay.
+
+```go
 var (
-	// list of signed transactions
-	bundle types.Transactions
+	bundle types.Transactions // list of signed transactions
 
 	bundleHash common.Hash
 )
-err = client.Call(
+
+err := client.Call(
 	flashbots.SendBundle(&flashbots.SendBundleRequest{
 		Transactions: bundle,
 		BlockNumber:  big.NewInt(999_999_999),
 	}).Returns(&bundleHash),
 )
-if err != nil {
-	fmt.Printf("Failed to send bundle: %v\n", err)
-	return
-}
-fmt.Printf("Sent bundle successfully: %s\n", bundleHash)
 ```
 
 Note that the Flashbots relay does not support batch requests. Thus, sending
@@ -64,7 +60,7 @@ more than one request in `Client.Call` will result in a server error.
 
 ## RPC Methods
 
-List of supported RPC methods:
+List of supported RPC methods.
 
 Method                     | Go Code
 :--------------------------|:--------
