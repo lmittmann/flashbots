@@ -1,7 +1,8 @@
-package flashbots
+package internal
 
 import (
 	"bytes"
+	"errors"
 	"math/big"
 	"strconv"
 	"testing"
@@ -9,20 +10,20 @@ import (
 
 func TestStrBigintMarshalJSON(t *testing.T) {
 	tests := []struct {
-		Int      strBigint
+		Int      StrInt
 		WantJSON []byte
 		WantErr  error
 	}{
 		{
-			Int:      strBigint(*big.NewInt(0)),
+			Int:      StrInt(*big.NewInt(0)),
 			WantJSON: []byte(`"0"`),
 		},
 		{
-			Int:      strBigint(*big.NewInt(1)),
+			Int:      StrInt(*big.NewInt(1)),
 			WantJSON: []byte(`"1"`),
 		},
 		{
-			Int:      strBigint(*big.NewInt(-1)),
+			Int:      StrInt(*big.NewInt(-1)),
 			WantJSON: []byte(`"-1"`),
 		},
 	}
@@ -46,26 +47,34 @@ func TestStrBigintMarshalJSON(t *testing.T) {
 func TestStrBigintUnmarshalJSON(t *testing.T) {
 	tests := []struct {
 		JSON    []byte
-		WantInt strBigint
+		WantInt StrInt
 		WantErr error
 	}{
 		{
 			JSON:    []byte(`"0"`),
-			WantInt: strBigint(*big.NewInt(0)),
+			WantInt: StrInt(*big.NewInt(0)),
 		},
 		{
 			JSON:    []byte(`"1"`),
-			WantInt: strBigint(*big.NewInt(1)),
+			WantInt: StrInt(*big.NewInt(1)),
 		},
 		{
 			JSON:    []byte(`"-1"`),
-			WantInt: strBigint(*big.NewInt(-1)),
+			WantInt: StrInt(*big.NewInt(-1)),
+		},
+		{
+			JSON:    []byte(`0`),
+			WantErr: errors.New("invalid number string 0"),
+		},
+		{
+			JSON:    []byte(`"xxx"`),
+			WantErr: errors.New(`invalid number string "xxx"`),
 		},
 	}
 
 	for i, test := range tests {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
-			gotInt := new(strBigint)
+			gotInt := new(StrInt)
 			err := gotInt.UnmarshalJSON(test.JSON)
 			if err != nil {
 				if test.WantErr == nil {

@@ -38,13 +38,12 @@ func Example() {
 
 		bundleHash common.Hash
 	)
-	err = client.Call(
+	if err := client.Call(
 		flashbots.SendBundle(&flashbots.SendBundleRequest{
 			Transactions: bundle,
 			BlockNumber:  big.NewInt(999_999_999),
 		}).Returns(&bundleHash),
-	)
-	if err != nil {
+	); err != nil {
 		fmt.Printf("Failed to send bundle to Flashbots relay: %v\n", err)
 		return
 	}

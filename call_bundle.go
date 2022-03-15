@@ -9,6 +9,8 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/lmittmann/flashbots/internal"
+	"github.com/lmittmann/w3/core"
 )
 
 type CallBundleRequest struct {
@@ -63,11 +65,11 @@ type CallBundleResponse struct {
 }
 
 type callBundleResponse struct {
-	BundleGasPrice    *strBigint         `json:"bundleGasPrice"`
+	BundleGasPrice    *internal.StrInt   `json:"bundleGasPrice"`
 	BundleHash        *common.Hash       `json:"bundleHash"`
-	CoinbaseDiff      *strBigint         `json:"coinbaseDiff"`
-	EthSentToCoinbase *strBigint         `json:"ethSentToCoinbase"`
-	GasFees           *strBigint         `json:"gasFees"`
+	CoinbaseDiff      *internal.StrInt   `json:"coinbaseDiff"`
+	EthSentToCoinbase *internal.StrInt   `json:"ethSentToCoinbase"`
+	GasFees           *internal.StrInt   `json:"gasFees"`
 	StateBlockNumber  *big.Int           `json:"stateBlockNumber"`
 	TotalGasUsed      *uint64            `json:"totalGasUsed"`
 	Results           []callBundleResult `json:"results"`
@@ -89,15 +91,15 @@ type CallBundleResult struct {
 }
 
 type callBundleResult struct {
-	CoinbaseDiff      *strBigint      `json:"coinbaseDiff"`
-	EthSentToCoinbase *strBigint      `json:"ethSentToCoinbase"`
-	FromAddress       *common.Address `json:"fromAddress"`
-	GasFees           *strBigint      `json:"gasFees"`
-	GasPrice          *strBigint      `json:"gasPrice"`
-	GasUsed           *uint64         `json:"gasUsed"`
-	ToAddress         *common.Address `json:"toAddress"`
-	TxHash            *common.Hash    `json:"txHash"`
-	Value             *hexutil.Bytes  `json:"value"`
+	CoinbaseDiff      *internal.StrInt `json:"coinbaseDiff"`
+	EthSentToCoinbase *internal.StrInt `json:"ethSentToCoinbase"`
+	FromAddress       *common.Address  `json:"fromAddress"`
+	GasFees           *internal.StrInt `json:"gasFees"`
+	GasPrice          *internal.StrInt `json:"gasPrice"`
+	GasUsed           *uint64          `json:"gasUsed"`
+	ToAddress         *common.Address  `json:"toAddress"`
+	TxHash            *common.Hash     `json:"txHash"`
+	Value             *hexutil.Bytes   `json:"value"`
 
 	Error  *string `json:"error"`
 	Revert *string `json:"revert"`
@@ -173,11 +175,11 @@ func (c *CallBundleResponse) UnmarshalJSON(input []byte) error {
 }
 
 // CallBundle simulates a bundle.
-func CallBundle(r *CallBundleRequest) *CallBundleFactory {
-	return &CallBundleFactory{param: r}
+func CallBundle(r *CallBundleRequest) core.CallFactoryReturns[CallBundleResponse] {
+	return &callBundleFactory{param: r}
 }
 
-type CallBundleFactory struct {
+type callBundleFactory struct {
 	// args
 	param *CallBundleRequest
 
@@ -186,25 +188,32 @@ type CallBundleFactory struct {
 	returns *CallBundleResponse
 }
 
-func (f *CallBundleFactory) Returns(resp *CallBundleResponse) *CallBundleFactory {
+func (f *callBundleFactory) Returns(resp *CallBundleResponse) core.Caller {
 	f.returns = resp
 	return f
 }
 
 // CreateRequest implements the w3/core.RequestCreator interface.
-func (f *CallBundleFactory) CreateRequest() (rpc.BatchElem, error) {
+func (f *callBundleFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "eth_callBundle",
-		Args:   []interface{}{f.param},
+		Args:   []any{f.param},
 		Result: &f.result,
 	}, nil
 }
 
 // HandleResponse implements the w3/core.ResponseHandler interface.
-func (f *CallBundleFactory) HandleResponse(elem rpc.BatchElem) error {
+func (f *callBundleFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
 	}
 	*f.returns = f.result
 	return nil
+}
+
+func toBlockNumberArg(blockNumber *big.Int) string {
+	if blockNumber == nil || blockNumber.Sign() < 0 {
+		return "latest"
+	}
+	return hexutil.EncodeBig(blockNumber)
 }

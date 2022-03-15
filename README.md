@@ -63,9 +63,9 @@ more than one request in `Client.Call` will result in a server error.
 
 List of supported RPC methods.
 
-Method                     | Go Code
-:--------------------------|:--------
-`eth_sendBundle`           | `flashbots.SendBundle(r *flashbots.SendBundleRequest).Returns(bundleHash *common.Hash)`
-`eth_callBundle`           | `flashbots.CallBundle(r *flashbots.CallBundleRequest).Returns(resp *flashbots.CallBundleResponse)`
-`flashbots_getUserStats`   | `flashbots.UserStats(blockNumber *big.Int).Returns(resp *flashbots.UserStatsResponse)`
-`flashbots_getBundleStats` | `flashbots.BundleStats(bundleHash common.Hash, blockNumber *big.Int).Returns(resp *flashbots.BundleStatsResponse)`
+| Method                     | Go Code
+| :------------------------- | :-------
+| `eth_sendBundle`           | `flashbots.SendBundle(r *flashbots.SendBundleRequest).Returns(bundleHash *common.Hash)`
+| `eth_callBundle`           | `flashbots.CallBundle(r *flashbots.CallBundleRequest).Returns(resp *flashbots.CallBundleResponse)`
+| `flashbots_getUserStats`   | `flashbots.UserStats(blockNumber *big.Int).Returns(resp *flashbots.UserStatsResponse)`
+| `flashbots_getBundleStats` | `flashbots.BundleStats(bundleHash common.Hash, blockNumber *big.Int).Returns(resp *flashbots.BundleStatsResponse)`

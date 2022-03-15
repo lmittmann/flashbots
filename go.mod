@@ -1,11 +1,11 @@
 module github.com/lmittmann/flashbots
 
-go 1.17
+go 1.18
 
 require (
 	github.com/ethereum/go-ethereum v1.10.16
 	github.com/google/go-cmp v0.5.7
-	github.com/lmittmann/w3 v0.5.1
+	github.com/lmittmann/w3 v0.6.0
 )
 
 require (

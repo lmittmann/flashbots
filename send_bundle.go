@@ -8,6 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/lmittmann/w3/core"
 )
 
 type SendBundleRequest struct {
@@ -58,11 +59,11 @@ type sendBundleResponse struct {
 }
 
 // SendBundle sends the bundle to the client's endpoint.
-func SendBundle(r *SendBundleRequest) *SendBundleFactory {
-	return &SendBundleFactory{param: r}
+func SendBundle(r *SendBundleRequest) core.CallFactoryReturns[common.Hash] {
+	return &sendBundleFactory{param: r}
 }
 
-type SendBundleFactory struct {
+type sendBundleFactory struct {
 	// args
 	param *SendBundleRequest
 
@@ -71,22 +72,22 @@ type SendBundleFactory struct {
 	returns *common.Hash
 }
 
-func (f *SendBundleFactory) Returns(hash *common.Hash) *SendBundleFactory {
+func (f *sendBundleFactory) Returns(hash *common.Hash) core.Caller {
 	f.returns = hash
 	return f
 }
 
 // CreateRequest implements the w3/core.RequestCreator interface.
-func (f *SendBundleFactory) CreateRequest() (rpc.BatchElem, error) {
+func (f *sendBundleFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "eth_sendBundle",
-		Args:   []interface{}{f.param},
+		Args:   []any{f.param},
 		Result: &f.result,
 	}, nil
 }
 
 // HandleResponse implements the w3/core.ResponseHandler interface.
-func (f *SendBundleFactory) HandleResponse(elem rpc.BatchElem) error {
+func (f *sendBundleFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
 	}

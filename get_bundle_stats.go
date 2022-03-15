@@ -7,6 +7,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/lmittmann/w3/core"
 )
 
 type bundleStatsRequest struct {
@@ -25,11 +26,11 @@ type BundleStatsResponse struct {
 
 // BundleStats requests the bundles Flashbots relay stats. The given block
 // number must be within 20 blocks of the current chain tip.
-func BundleStats(bundleHash common.Hash, blockNumber *big.Int) *BundleStatsFactory {
-	return &BundleStatsFactory{bundleHash: bundleHash, blockNumber: blockNumber}
+func BundleStats(bundleHash common.Hash, blockNumber *big.Int) core.CallFactoryReturns[BundleStatsResponse] {
+	return &bundleStatsFactory{bundleHash: bundleHash, blockNumber: blockNumber}
 }
 
-type BundleStatsFactory struct {
+type bundleStatsFactory struct {
 	// args
 	bundleHash  common.Hash
 	blockNumber *big.Int
@@ -39,16 +40,16 @@ type BundleStatsFactory struct {
 	returns *BundleStatsResponse
 }
 
-func (f *BundleStatsFactory) Returns(bundleStats *BundleStatsResponse) *BundleStatsFactory {
+func (f *bundleStatsFactory) Returns(bundleStats *BundleStatsResponse) core.Caller {
 	f.returns = bundleStats
 	return f
 }
 
 // CreateRequest implements the w3/core.RequestCreator interface.
-func (f *BundleStatsFactory) CreateRequest() (rpc.BatchElem, error) {
+func (f *bundleStatsFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "flashbots_getBundleStats",
-		Args: []interface{}{&bundleStatsRequest{
+		Args: []any{&bundleStatsRequest{
 			BundleHash:  f.bundleHash,
 			BlockNumber: (*hexutil.Big)(f.blockNumber),
 		}},
@@ -57,7 +58,7 @@ func (f *BundleStatsFactory) CreateRequest() (rpc.BatchElem, error) {
 }
 
 // HandleResponse implements the w3/core.ResponseHandler interface.
-func (f *BundleStatsFactory) HandleResponse(elem rpc.BatchElem) error {
+func (f *bundleStatsFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
 	}

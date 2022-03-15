@@ -6,6 +6,8 @@ import (
 
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/lmittmann/flashbots/internal"
+	"github.com/lmittmann/w3/core"
 )
 
 type UserStatsResponse struct {
@@ -19,13 +21,13 @@ type UserStatsResponse struct {
 }
 
 type userStatsResponse struct {
-	IsHighPriority       *bool      `json:"is_high_priority"`
-	AllTimeMinerPayments *strBigint `json:"all_time_miner_payments"`
-	AllTimeGasSimulated  *strBigint `json:"all_time_gas_simulated"`
-	Last7dMinerPayments  *strBigint `json:"last_7d_miner_payments"`
-	Last7dGasSimulated   *strBigint `json:"last_7d_gas_simulated"`
-	Last1dMinerPayments  *strBigint `json:"last_1d_miner_payments"`
-	Last1dGasSimulated   *strBigint `json:"last_1d_gas_simulated"`
+	IsHighPriority       *bool            `json:"is_high_priority"`
+	AllTimeMinerPayments *internal.StrInt `json:"all_time_miner_payments"`
+	AllTimeGasSimulated  *internal.StrInt `json:"all_time_gas_simulated"`
+	Last7dMinerPayments  *internal.StrInt `json:"last_7d_miner_payments"`
+	Last7dGasSimulated   *internal.StrInt `json:"last_7d_gas_simulated"`
+	Last1dMinerPayments  *internal.StrInt `json:"last_1d_miner_payments"`
+	Last1dGasSimulated   *internal.StrInt `json:"last_1d_gas_simulated"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
@@ -61,11 +63,11 @@ func (u *UserStatsResponse) UnmarshalJSON(input []byte) error {
 
 // UserStats requests the users Flashbots relay stats. The given block number
 // must be within 20 blocks of the current chain tip.
-func UserStats(blockNumber *big.Int) *UserStatsFactory {
-	return &UserStatsFactory{blockNumber: blockNumber}
+func UserStats(blockNumber *big.Int) core.CallFactoryReturns[UserStatsResponse] {
+	return &userStatsFactory{blockNumber: blockNumber}
 }
 
-type UserStatsFactory struct {
+type userStatsFactory struct {
 	// args
 	blockNumber *big.Int
 
@@ -74,22 +76,22 @@ type UserStatsFactory struct {
 	returns *UserStatsResponse
 }
 
-func (f *UserStatsFactory) Returns(userStats *UserStatsResponse) *UserStatsFactory {
+func (f *userStatsFactory) Returns(userStats *UserStatsResponse) core.Caller {
 	f.returns = userStats
 	return f
 }
 
 // CreateRequest implements the w3/core.RequestCreator interface.
-func (f *UserStatsFactory) CreateRequest() (rpc.BatchElem, error) {
+func (f *userStatsFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "flashbots_getUserStats",
-		Args:   []interface{}{hexutil.EncodeBig(f.blockNumber)},
+		Args:   []any{hexutil.EncodeBig(f.blockNumber)},
 		Result: &f.result,
 	}, nil
 }
 
 // HandleResponse implements the w3/core.ResponseHandler interface.
-func (f *UserStatsFactory) HandleResponse(elem rpc.BatchElem) error {
+func (f *userStatsFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
 	}
