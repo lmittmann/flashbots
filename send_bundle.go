@@ -91,6 +91,8 @@ func (f *sendBundleFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
 	}
-	*f.returns = f.result.BundleHash
+	if f.returns != nil {
+		*f.returns = f.result.BundleHash
+	}
 	return nil
 }
