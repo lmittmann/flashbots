@@ -175,7 +175,7 @@ func (c *CallBundleResponse) UnmarshalJSON(input []byte) error {
 }
 
 // CallBundle simulates a bundle.
-func CallBundle(r *CallBundleRequest) core.CallFactoryReturns[CallBundleResponse] {
+func CallBundle(r *CallBundleRequest) core.CallerFactory[CallBundleResponse] {
 	return &callBundleFactory{param: r}
 }
 

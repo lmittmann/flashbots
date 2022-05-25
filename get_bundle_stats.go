@@ -26,7 +26,7 @@ type BundleStatsResponse struct {
 
 // BundleStats requests the bundles Flashbots relay stats. The given block
 // number must be within 20 blocks of the current chain tip.
-func BundleStats(bundleHash common.Hash, blockNumber *big.Int) core.CallFactoryReturns[BundleStatsResponse] {
+func BundleStats(bundleHash common.Hash, blockNumber *big.Int) core.CallerFactory[BundleStatsResponse] {
 	return &bundleStatsFactory{bundleHash: bundleHash, blockNumber: blockNumber}
 }
 

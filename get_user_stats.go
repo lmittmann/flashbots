@@ -63,7 +63,7 @@ func (u *UserStatsResponse) UnmarshalJSON(input []byte) error {
 
 // UserStats requests the users Flashbots relay stats. The given block number
 // must be within 20 blocks of the current chain tip.
-func UserStats(blockNumber *big.Int) core.CallFactoryReturns[UserStatsResponse] {
+func UserStats(blockNumber *big.Int) core.CallerFactory[UserStatsResponse] {
 	return &userStatsFactory{blockNumber: blockNumber}
 }
 

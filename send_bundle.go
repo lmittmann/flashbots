@@ -59,7 +59,7 @@ type sendBundleResponse struct {
 }
 
 // SendBundle sends the bundle to the client's endpoint.
-func SendBundle(r *SendBundleRequest) core.CallFactoryReturns[common.Hash] {
+func SendBundle(r *SendBundleRequest) core.CallerFactory[common.Hash] {
 	return &sendBundleFactory{param: r}
 }
 
