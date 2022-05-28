@@ -36,7 +36,6 @@ type bundleStatsFactory struct {
 	blockNumber *big.Int
 
 	// returns
-	result  BundleStatsResponse
 	returns *BundleStatsResponse
 }
 
@@ -53,7 +52,7 @@ func (f *bundleStatsFactory) CreateRequest() (rpc.BatchElem, error) {
 			BundleHash:  f.bundleHash,
 			BlockNumber: (*hexutil.Big)(f.blockNumber),
 		}},
-		Result: &f.result,
+		Result: f.returns,
 	}, nil
 }
 
@@ -62,6 +61,5 @@ func (f *bundleStatsFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
 	}
-	*f.returns = f.result
 	return nil
 }

@@ -184,7 +184,6 @@ type callBundleFactory struct {
 	param *CallBundleRequest
 
 	// returns
-	result  CallBundleResponse
 	returns *CallBundleResponse
 }
 
@@ -198,7 +197,7 @@ func (f *callBundleFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "eth_callBundle",
 		Args:   []any{f.param},
-		Result: &f.result,
+		Result: f.returns,
 	}, nil
 }
 
@@ -207,7 +206,6 @@ func (f *callBundleFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
 	}
-	*f.returns = f.result
 	return nil
 }
 

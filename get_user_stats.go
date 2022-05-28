@@ -72,7 +72,6 @@ type userStatsFactory struct {
 	blockNumber *big.Int
 
 	// returns
-	result  UserStatsResponse
 	returns *UserStatsResponse
 }
 
@@ -86,7 +85,7 @@ func (f *userStatsFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "flashbots_getUserStats",
 		Args:   []any{hexutil.EncodeBig(f.blockNumber)},
-		Result: &f.result,
+		Result: f.returns,
 	}, nil
 }
 
@@ -95,6 +94,5 @@ func (f *userStatsFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
 	}
-	*f.returns = f.result
 	return nil
 }
