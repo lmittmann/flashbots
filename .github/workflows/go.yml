@@ -29,4 +29,10 @@ jobs:
           go-version: 1.18
       - uses: actions/checkout@v2
       - name: go test
-        run: go test ./...
+        run: go test -covermode atomic -coverprofile=covprofile ./...
+      - name: install goveralls
+        run: go install github.com/mattn/goveralls@latest
+      - name: send coverage
+        env:
+          COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: goveralls -coverprofile=covprofile -service=github
