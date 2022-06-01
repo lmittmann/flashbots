@@ -1,0 +1,2 @@
+> {"jsonrpc":"2.0","id":1,"method":"eth_sendPrivateTransaction","params":[{"tx":"0x00","maxBlockNumber":"0x98967f","preferences":{"fast":true}}]}
+< {"jsonrpc":"2.0","id":1,"result":"0x45df1bc3de765927b053ec029fc9d15d6321945b23cac0614eb0b5e61f3a2f2a"}

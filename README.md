@@ -2,7 +2,8 @@
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/lmittmann/flashbots.svg)](https://pkg.go.dev/github.com/lmittmann/flashbots)
 [![Go Report Card](https://goreportcard.com/badge/github.com/lmittmann/flashbots)](https://goreportcard.com/report/github.com/lmittmann/flashbots)
-[![Latest Release](https://img.shields.io/github/v/release/lmittmann/flashbots?color=007d9c)](https://github.com/lmittmann/flashbots/releases)
+[![Coverage Status](https://coveralls.io/repos/github/lmittmann/flashbots/badge.svg?branch=main)](https://coveralls.io/github/lmittmann/flashbots?branch=main)
+[![Latest Release](https://img.shields.io/github/v/release/lmittmann/flashbots)](https://github.com/lmittmann/flashbots/releases)
 
 Package flashbots implements RPC API bindings for the Flashbots relay and
 [mev-geth](https://github.com/flashbots/mev-geth) for use with the [`w3`](https://github.com/lmittmann/w3)
@@ -41,12 +42,9 @@ defer client.Close()
 Send a bundle to the Flashbots relay.
 
 ```go
-var (
-	bundle types.Transactions // list of signed transactions
+var bundle types.Transactions // list of signed transactions
 
-	bundleHash common.Hash
-)
-
+var bundleHash common.Hash
 err := client.Call(
 	flashbots.SendBundle(&flashbots.SendBundleRequest{
 		Transactions: bundle,
@@ -63,9 +61,11 @@ more than one request in `Client.Call` will result in a server error.
 
 List of supported RPC methods.
 
-| Method                     | Go Code
-| :------------------------- | :-------
-| `eth_sendBundle`           | `flashbots.SendBundle(r *flashbots.SendBundleRequest).Returns(bundleHash *common.Hash)`
-| `eth_callBundle`           | `flashbots.CallBundle(r *flashbots.CallBundleRequest).Returns(resp *flashbots.CallBundleResponse)`
-| `flashbots_getUserStats`   | `flashbots.UserStats(blockNumber *big.Int).Returns(resp *flashbots.UserStatsResponse)`
-| `flashbots_getBundleStats` | `flashbots.BundleStats(bundleHash common.Hash, blockNumber *big.Int).Returns(resp *flashbots.BundleStatsResponse)`
+| Method                         | Go Code
+| :----------------------------- | :-------
+| `eth_sendBundle`               | `flashbots.SendBundle(r *flashbots.SendBundleRequest).Returns(bundleHash *common.Hash)`
+| `eth_callBundle`               | `flashbots.CallBundle(r *flashbots.CallBundleRequest).Returns(resp *flashbots.CallBundleResponse)`
+| `eth_sendPrivateTransaction`   | `flashbots.SendPrivateTransaction(r *flashbots.SendPrivateTransactionRequest).Returns(txHash *common.Hash)`
+| `eth_cancelPrivateTransaction` | `flashbots.CancelPrivateTransaction(txHash common.Hash).Returns(success *bool)`
+| `flashbots_getUserStats`       | `flashbots.UserStats(blockNumber *big.Int).Returns(resp *flashbots.UserStatsResponse)`
+| `flashbots_getBundleStats`     | `flashbots.BundleStats(bundleHash common.Hash, blockNumber *big.Int).Returns(resp *flashbots.BundleStatsResponse)`

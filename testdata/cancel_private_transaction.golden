@@ -1,0 +1,2 @@
+> {"jsonrpc":"2.0","id":1,"method":"eth_cancelPrivateTransaction","params":[{"txHash":"0x45df1bc3de765927b053ec029fc9d15d6321945b23cac0614eb0b5e61f3a2f2a"}]}
+< {"jsonrpc":"2.0","id":1,"result":true}
