@@ -53,8 +53,8 @@ err := client.Call(
 )
 ```
 
-Note that the Flashbots relay does not support batch requests. Thus, sending
-more than one request in `Client.Call` will result in a server error.
+> ⚠ The Flashbots relay does not support batch requests. Thus, sending more than
+one call in `Client.Call` will result in a server error.
 
 
 ## RPC Methods
