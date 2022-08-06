@@ -19,8 +19,8 @@ func TestSendPrivateTransaction(t *testing.T) {
 	defer client.Close()
 
 	var (
-		sendPrivateTransactionReq = &SendPrivateTransactionRequest{
-			RawTransaction: w3.B("0x00"),
+		sendPrivateTransactionReq = &SendPrivateTxRequest{
+			RawTx:          w3.B("0x00"),
 			MaxBlockNumber: big.NewInt(9_999_999),
 			Fast:           true,
 		}
@@ -29,7 +29,7 @@ func TestSendPrivateTransaction(t *testing.T) {
 	)
 
 	if err := client.Call(
-		SendPrivateTransaction(sendPrivateTransactionReq).Returns(&hash),
+		SendPrivateTx(sendPrivateTransactionReq).Returns(&hash),
 	); err != nil {
 		t.Fatalf("Request failed: %v", err)
 	}

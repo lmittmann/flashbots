@@ -21,7 +21,7 @@ func TestCancelPrivateTransaction(t *testing.T) {
 		wantSuccess = true
 	)
 	if err := client.Call(
-		CancelPrivateTransaction(w3.H("0x45df1bc3de765927b053ec029fc9d15d6321945b23cac0614eb0b5e61f3a2f2a")).Returns(&success),
+		CancelPrivateTx(w3.H("0x45df1bc3de765927b053ec029fc9d15d6321945b23cac0614eb0b5e61f3a2f2a")).Returns(&success),
 	); err != nil {
 		t.Fatalf("Request failed: %v", err)
 	}
