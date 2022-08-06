@@ -3,12 +3,66 @@ package flashbots
 import (
 	"encoding/json"
 	"math/big"
+	"time"
 
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/lmittmann/flashbots/internal"
 	"github.com/lmittmann/w3/core"
 )
+
+type bundleStatsRequest struct {
+	BundleHash  common.Hash  `json:"bundleHash"`
+	BlockNumber *hexutil.Big `json:"blockNumber"`
+}
+
+type BundleStatsResponse struct {
+	IsSimulated    bool
+	IsSentToMiners bool
+	IsHighPriority bool
+	SimulatedAt    time.Time
+	SubmittedAt    time.Time
+	SentToMinersAt time.Time
+}
+
+// BundleStats requests the bundles Flashbots relay stats. The given block
+// number must be within 20 blocks of the current chain tip.
+func BundleStats(bundleHash common.Hash, blockNumber *big.Int) core.CallerFactory[BundleStatsResponse] {
+	return &bundleStatsFactory{bundleHash: bundleHash, blockNumber: blockNumber}
+}
+
+type bundleStatsFactory struct {
+	// args
+	bundleHash  common.Hash
+	blockNumber *big.Int
+
+	// returns
+	returns *BundleStatsResponse
+}
+
+func (f *bundleStatsFactory) Returns(bundleStats *BundleStatsResponse) core.Caller {
+	f.returns = bundleStats
+	return f
+}
+
+func (f *bundleStatsFactory) CreateRequest() (rpc.BatchElem, error) {
+	return rpc.BatchElem{
+		Method: "flashbots_getBundleStats",
+		Args: []any{&bundleStatsRequest{
+			BundleHash:  f.bundleHash,
+			BlockNumber: (*hexutil.Big)(f.blockNumber),
+		}},
+		Result: f.returns,
+	}, nil
+}
+
+func (f *bundleStatsFactory) HandleResponse(elem rpc.BatchElem) error {
+	if err := elem.Error; err != nil {
+		return err
+	}
+	return nil
+}
 
 type UserStatsResponse struct {
 	IsHighPriority       bool     // True if the searcher has an high enough reputation to be in the high priority queue.
@@ -80,7 +134,6 @@ func (f *userStatsFactory) Returns(userStats *UserStatsResponse) core.Caller {
 	return f
 }
 
-// CreateRequest implements the w3/core.RequestCreator interface.
 func (f *userStatsFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "flashbots_getUserStats",
@@ -89,7 +142,6 @@ func (f *userStatsFactory) CreateRequest() (rpc.BatchElem, error) {
 	}, nil
 }
 
-// HandleResponse implements the w3/core.ResponseHandler interface.
 func (f *userStatsFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
