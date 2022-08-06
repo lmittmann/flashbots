@@ -6,8 +6,7 @@
 [![Latest Release](https://img.shields.io/github/v/release/lmittmann/flashbots)](https://github.com/lmittmann/flashbots/releases)
 
 Package flashbots implements RPC API bindings for the Flashbots relay and
-[mev-geth](https://github.com/flashbots/mev-geth) for use with the [`w3`](https://github.com/lmittmann/w3)
-package.
+[mev-geth](https://github.com/flashbots/mev-geth) for use with the [`w3` package](https://github.com/lmittmann/w3).
 
 
 ## Install
@@ -65,7 +64,7 @@ List of supported RPC methods.
 | :----------------------------- | :-------
 | `eth_sendBundle`               | `flashbots.SendBundle(r *flashbots.SendBundleRequest).Returns(bundleHash *common.Hash)`
 | `eth_callBundle`               | `flashbots.CallBundle(r *flashbots.CallBundleRequest).Returns(resp *flashbots.CallBundleResponse)`
-| `eth_sendPrivateTransaction`   | `flashbots.SendPrivateTransaction(r *flashbots.SendPrivateTransactionRequest).Returns(txHash *common.Hash)`
-| `eth_cancelPrivateTransaction` | `flashbots.CancelPrivateTransaction(txHash common.Hash).Returns(success *bool)`
+| `eth_sendPrivateTransaction`   | `flashbots.SendPrivateTx(r *flashbots.SendPrivateTxRequest).Returns(txHash *common.Hash)`
+| `eth_cancelPrivateTransaction` | `flashbots.CancelPrivateTx(txHash common.Hash).Returns(success *bool)`
 | `flashbots_getUserStats`       | `flashbots.UserStats(blockNumber *big.Int).Returns(resp *flashbots.UserStatsResponse)`
 | `flashbots_getBundleStats`     | `flashbots.BundleStats(bundleHash common.Hash, blockNumber *big.Int).Returns(resp *flashbots.BundleStatsResponse)`
