@@ -5,7 +5,6 @@ import (
 	"crypto/ecdsa"
 	"errors"
 	"io"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/ethereum/go-ethereum/accounts"
@@ -41,7 +40,7 @@ func (auth *authRoundTripper) RoundTrip(r *http.Request) (*http.Response, error)
 			return nil, err
 		}
 		r.Body.Close()
-		r.Body = ioutil.NopCloser(buf)
+		r.Body = io.NopCloser(buf)
 
 		// generate payload signature
 		sig, err := auth.sign(buf.Bytes())
