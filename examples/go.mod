@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/ethereum/go-ethereum v1.10.21
-	github.com/lmittmann/flashbots v0.4.1
+	github.com/lmittmann/flashbots v0.5.0
 	github.com/lmittmann/w3 v0.8.1
 )
 
