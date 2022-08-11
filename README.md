@@ -18,6 +18,8 @@ go get github.com/lmittmann/flashbots
 
 ## Getting Started
 
+> ℹ Check out the [examples](examples/)!
+
 Connect to the Flashbots relay. The [`AuthTransport`](https://pkg.go.dev/github.com/lmittmann/flashbots#AuthTransport)
 adds the `X-Flashbots-Signature` header to every request from the client.
 
