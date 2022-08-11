@@ -35,7 +35,7 @@ func main() {
 	if err := fbClient.Call(
 		flashbots.UserStats(&latestBlock).Returns(&userStats),
 	); err != nil {
-		fmt.Printf("Faile to fetch user statistics: %v\n", err)
+		fmt.Printf("Failed to fetch user statistics: %v\n", err)
 	}
 
 	// print user statistics
