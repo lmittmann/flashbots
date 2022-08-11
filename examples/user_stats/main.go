@@ -16,6 +16,7 @@ var (
 	// or use the private key you use for signing bundles
 	// prv, _ = crypto.HexToECDSA("...")
 
+	// clients
 	client   = w3.MustDial("https://rpc.ankr.com/eth")
 	fbClient = flashbots.MustDial("https://relay.flashbots.net", prv)
 )
@@ -36,6 +37,7 @@ func main() {
 		flashbots.UserStats(&latestBlock).Returns(&userStats),
 	); err != nil {
 		fmt.Printf("Failed to fetch user statistics: %v\n", err)
+		return
 	}
 
 	// print user statistics
