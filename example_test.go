@@ -11,19 +11,17 @@ import (
 )
 
 func Example() {
-	// Private key for request authentication
+	// Private key for request signing
 	var prv *ecdsa.PrivateKey
 
-	// Connect to relay
+	// Connect to Flashbots relay
 	client := flashbots.MustDial("https://relay.flashbots.net", prv)
 	defer client.Close()
 
 	// Send bundle
-	var (
-		bundle types.Transactions // list of signed transactions
+	bundle := []*types.Transaction{ /* signed transactions... */ }
 
-		bundleHash common.Hash
-	)
+	var bundleHash common.Hash
 	if err := client.Call(
 		flashbots.SendBundle(&flashbots.SendBundleRequest{
 			Transactions: bundle,

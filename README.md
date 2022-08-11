@@ -20,8 +20,10 @@ go get github.com/lmittmann/flashbots
 
 > ℹ Check out the [examples](examples/)!
 
-Connect to the Flashbots relay. The [`AuthTransport`](https://pkg.go.dev/github.com/lmittmann/flashbots#AuthTransport)
-adds the `X-Flashbots-Signature` header to every request from the client.
+Connect to the Flashbots relay. The [`w3.Client`](https://pkg.go.dev/github.com/lmittmann/w3#Client)
+returned by [`Dial`](https://pkg.go.dev/github.com/lmittmann/flashbots#Dial)
+uses the [`AuthTransport`](https://pkg.go.dev/github.com/lmittmann/flashbots#AuthTransport)
+to add the `X-Flashbots-Signature` header to every request.
 
 ```go
 // Private key for request signing.
@@ -35,7 +37,7 @@ defer client.Close()
 Send a bundle to the Flashbots relay.
 
 ```go
-var bundle types.Transactions // list of signed transactions
+bundle := []*types.Transaction{ /* signed transactions... */ }
 
 var bundleHash common.Hash
 err := client.Call(
