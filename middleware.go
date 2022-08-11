@@ -11,6 +11,8 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/lmittmann/w3"
 )
 
 // AuthTransport returns a http.RoundTripper that adds the
@@ -59,4 +61,29 @@ func (auth *authRoundTripper) sign(body []byte) (string, error) {
 		return "", err
 	}
 	return auth.addr.Hex() + ":" + hexutil.Encode(sig), nil
+}
+
+// Dial returns a new [w3.Client] connected to the URL rawurl that adds the
+// 'X-Flashbots-Signature' to every request. An error is returned if the
+// connection establishment failes.
+func Dial(rawurl string, prv *ecdsa.PrivateKey) (*w3.Client, error) {
+	rpcClient, err := rpc.DialHTTPWithClient(
+		rawurl,
+		&http.Client{
+			Transport: AuthTransport(prv),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return w3.NewClient(rpcClient), nil
+}
+
+// MustDial is like [Dial] but panics if the connection establishment failes.
+func MustDial(rawurl string, prv *ecdsa.PrivateKey) *w3.Client {
+	client, err := Dial(rawurl, prv)
+	if err != nil {
+		panic("flashbots: " + err.Error())
+	}
+	return client
 }

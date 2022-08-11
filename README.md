@@ -22,19 +22,11 @@ Connect to the Flashbots relay. The [`AuthTransport`](https://pkg.go.dev/github.
 adds the `X-Flashbots-Signature` header to every request from the client.
 
 ```go
-// Private key for request authentication
-var privKey *ecdsa.PrivateKey
+// Private key for request signing.
+var prv *ecdsa.PrivateKey
 
-// Connect to Flashbots relay
-rpcClient, err := rpc.DialHTTPWithClient(
-	"https://relay.flashbots.net",
-	&http.Client{
-		Transport: flashbots.AuthTransport(privKey),
-	},
-)
-
-// Create w3 client form rpc client
-client := w3.NewClient(rpcClient)
+// Connect to Flashbots Relay
+client := flashbots.MustDial("https://relay.flashbots.net", prv)
 defer client.Close()
 ```
 

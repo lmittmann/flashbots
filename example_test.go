@@ -4,32 +4,18 @@ import (
 	"crypto/ecdsa"
 	"fmt"
 	"math/big"
-	"net/http"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/lmittmann/flashbots"
-	"github.com/lmittmann/w3"
 )
 
 func Example() {
 	// Private key for request authentication
-	var privKey *ecdsa.PrivateKey
+	var prv *ecdsa.PrivateKey
 
 	// Connect to relay
-	rpcClient, err := rpc.DialHTTPWithClient(
-		"https://relay.flashbots.net",
-		&http.Client{
-			Transport: flashbots.AuthTransport(privKey),
-		},
-	)
-	if err != nil {
-		fmt.Printf("Failed to connect to Flashbots relay: %v\n", err)
-		return
-	}
-
-	client := w3.NewClient(rpcClient)
+	client := flashbots.MustDial("https://relay.flashbots.net", prv)
 	defer client.Close()
 
 	// Send bundle
