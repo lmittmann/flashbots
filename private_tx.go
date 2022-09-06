@@ -26,7 +26,7 @@ type sendPrivateTxRequest struct {
 	} `json:"preferences"`
 }
 
-// MarshalJSON implements the json.Marshaler interface.
+// MarshalJSON implements the [json.Marshaler].
 func (c SendPrivateTxRequest) MarshalJSON() ([]byte, error) {
 	var enc sendPrivateTxRequest
 

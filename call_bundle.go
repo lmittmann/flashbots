@@ -28,7 +28,7 @@ type callBundleRequest struct {
 	Timestamp        *big.Int        `json:"timestamp"`
 }
 
-// MarshalJSON implements the json.Marshaler interface.
+// MarshalJSON implements the [json.Marshaler].
 func (c CallBundleRequest) MarshalJSON() ([]byte, error) {
 	var enc callBundleRequest
 
@@ -105,7 +105,7 @@ type callBundleResult struct {
 	Revert *string `json:"revert"`
 }
 
-// UnmarshalJSON implements the json.Unmarshaler interface.
+// UnmarshalJSON implements the [json.Unmarshaler].
 func (c *CallBundleResponse) UnmarshalJSON(input []byte) error {
 	var dec callBundleResponse
 	if err := json.Unmarshal(input, &dec); err != nil {
@@ -192,7 +192,7 @@ func (f *callBundleFactory) Returns(resp *CallBundleResponse) w3types.Caller {
 	return f
 }
 
-// CreateRequest implements the w3/core.RequestCreator interface.
+// CreateRequest implements the [w3types.RequestCreator].
 func (f *callBundleFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "eth_callBundle",
@@ -201,7 +201,7 @@ func (f *callBundleFactory) CreateRequest() (rpc.BatchElem, error) {
 	}, nil
 }
 
-// HandleResponse implements the w3/core.ResponseHandler interface.
+// HandleResponse implements the [w3types.ResponseHandler].
 func (f *callBundleFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err

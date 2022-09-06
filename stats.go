@@ -84,7 +84,7 @@ type userStatsResponse struct {
 	Last1dGasSimulated   *internal.StrInt `json:"last_1d_gas_simulated"`
 }
 
-// UnmarshalJSON implements the json.Unmarshaler interface.
+// UnmarshalJSON implements the [json.Unmarshaler].
 func (u *UserStatsResponse) UnmarshalJSON(input []byte) error {
 	var dec userStatsResponse
 	if err := json.Unmarshal(input, &dec); err != nil {

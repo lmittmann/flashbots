@@ -28,7 +28,7 @@ type sendBundleRequest struct {
 	RevertingTxHashes []common.Hash   `json:"revertingTxHashes,omitempty"`
 }
 
-// MarshalJSON implements the json.Marshaler interface.
+// MarshalJSON implements the [json.Marshaler].
 func (s SendBundleRequest) MarshalJSON() ([]byte, error) {
 	var enc sendBundleRequest
 
@@ -77,7 +77,7 @@ func (f *sendBundleFactory) Returns(hash *common.Hash) w3types.Caller {
 	return f
 }
 
-// CreateRequest implements the w3/w3types.RequestCreator interface.
+// CreateRequest implements the [w3types.RequestCreator].
 func (f *sendBundleFactory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "eth_sendBundle",
@@ -86,7 +86,7 @@ func (f *sendBundleFactory) CreateRequest() (rpc.BatchElem, error) {
 	}, nil
 }
 
-// HandleResponse implements the w3/w3types.ResponseHandler interface.
+// HandleResponse implements the [w3types.ResponseHandler].
 func (f *sendBundleFactory) HandleResponse(elem rpc.BatchElem) error {
 	if err := elem.Error; err != nil {
 		return err
