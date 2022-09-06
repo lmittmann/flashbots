@@ -9,7 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/lmittmann/flashbots/internal"
-	"github.com/lmittmann/w3/core"
+	"github.com/lmittmann/w3/w3types"
 )
 
 type bundleStatsRequest struct {
@@ -28,7 +28,7 @@ type BundleStatsResponse struct {
 
 // BundleStats requests the bundles Flashbots relay stats. The given block
 // number must be within 20 blocks of the current chain tip.
-func BundleStats(bundleHash common.Hash, blockNumber *big.Int) core.CallerFactory[BundleStatsResponse] {
+func BundleStats(bundleHash common.Hash, blockNumber *big.Int) w3types.CallerFactory[BundleStatsResponse] {
 	return &bundleStatsFactory{bundleHash: bundleHash, blockNumber: blockNumber}
 }
 
@@ -41,7 +41,7 @@ type bundleStatsFactory struct {
 	returns *BundleStatsResponse
 }
 
-func (f *bundleStatsFactory) Returns(bundleStats *BundleStatsResponse) core.Caller {
+func (f *bundleStatsFactory) Returns(bundleStats *BundleStatsResponse) w3types.Caller {
 	f.returns = bundleStats
 	return f
 }
@@ -117,7 +117,7 @@ func (u *UserStatsResponse) UnmarshalJSON(input []byte) error {
 
 // UserStats requests the users Flashbots relay stats. The given block number
 // must be within 20 blocks of the current chain tip.
-func UserStats(blockNumber *big.Int) core.CallerFactory[UserStatsResponse] {
+func UserStats(blockNumber *big.Int) w3types.CallerFactory[UserStatsResponse] {
 	return &userStatsFactory{blockNumber: blockNumber}
 }
 
@@ -129,7 +129,7 @@ type userStatsFactory struct {
 	returns *UserStatsResponse
 }
 
-func (f *userStatsFactory) Returns(userStats *UserStatsResponse) core.Caller {
+func (f *userStatsFactory) Returns(userStats *UserStatsResponse) w3types.Caller {
 	f.returns = userStats
 	return f
 }

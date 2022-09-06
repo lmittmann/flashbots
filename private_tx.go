@@ -8,7 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/rpc"
-	"github.com/lmittmann/w3/core"
+	"github.com/lmittmann/w3/w3types"
 )
 
 type SendPrivateTxRequest struct {
@@ -45,7 +45,7 @@ func (c SendPrivateTxRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SendPrivateTx sends a private transaction to the Flashbots relay.
-func SendPrivateTx(r *SendPrivateTxRequest) core.CallerFactory[common.Hash] {
+func SendPrivateTx(r *SendPrivateTxRequest) w3types.CallerFactory[common.Hash] {
 	return &sendPrivateTxFactory{params: r}
 }
 
@@ -57,7 +57,7 @@ type sendPrivateTxFactory struct {
 	returns *common.Hash
 }
 
-func (f *sendPrivateTxFactory) Returns(txHash *common.Hash) core.Caller {
+func (f *sendPrivateTxFactory) Returns(txHash *common.Hash) w3types.Caller {
 	f.returns = txHash
 	return f
 }
@@ -83,7 +83,7 @@ type cancelPrivateTxRequest struct {
 
 // CancelPrivateTx stops the private transactions with the given hash
 // from being submitted for future blocks by the Flashbots relay.
-func CancelPrivateTx(hash common.Hash) core.CallerFactory[bool] {
+func CancelPrivateTx(hash common.Hash) w3types.CallerFactory[bool] {
 	return &cancelPrivateTxFactory{hash: hash}
 }
 
@@ -95,7 +95,7 @@ type cancelPrivateTxFactory struct {
 	returns *bool
 }
 
-func (f *cancelPrivateTxFactory) Returns(success *bool) core.Caller {
+func (f *cancelPrivateTxFactory) Returns(success *bool) w3types.Caller {
 	f.returns = success
 	return f
 }

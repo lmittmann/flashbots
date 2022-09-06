@@ -10,7 +10,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/lmittmann/flashbots/internal"
-	"github.com/lmittmann/w3/core"
+	"github.com/lmittmann/w3/w3types"
 )
 
 type CallBundleRequest struct {
@@ -175,7 +175,7 @@ func (c *CallBundleResponse) UnmarshalJSON(input []byte) error {
 }
 
 // CallBundle simulates a bundle.
-func CallBundle(r *CallBundleRequest) core.CallerFactory[CallBundleResponse] {
+func CallBundle(r *CallBundleRequest) w3types.CallerFactory[CallBundleResponse] {
 	return &callBundleFactory{param: r}
 }
 
@@ -187,7 +187,7 @@ type callBundleFactory struct {
 	returns *CallBundleResponse
 }
 
-func (f *callBundleFactory) Returns(resp *CallBundleResponse) core.Caller {
+func (f *callBundleFactory) Returns(resp *CallBundleResponse) w3types.Caller {
 	f.returns = resp
 	return f
 }
