@@ -18,7 +18,8 @@ go get github.com/lmittmann/flashbots
 
 ## Getting Started
 
-> ℹ Check out the [examples](examples/)!
+> **Note**
+> Check out the [examples](examples/)!
 
 Connect to the Flashbots relay. The [`w3.Client`](https://pkg.go.dev/github.com/lmittmann/w3#Client)
 returned by [`Dial`](https://pkg.go.dev/github.com/lmittmann/flashbots#Dial)
@@ -48,7 +49,8 @@ err := client.Call(
 )
 ```
 
-> ⚠ The Flashbots relay does not support batch requests. Thus, sending more than
+> **Warning**
+> The Flashbots relay does not support batch requests. Thus, sending more than
 one call in `Client.Call` will result in a server error.
 
 
