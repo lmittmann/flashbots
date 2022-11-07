@@ -18,14 +18,14 @@ type CallBundleRequest struct {
 	RawTransactions  [][]byte           // List of signed raw transactions to simulate in a bundle.
 	BlockNumber      *big.Int           // Block number for which the bundle is valid.
 	StateBlockNumber *big.Int           // Block number of state to use for simulation, "latest" if nil.
-	Timestamp        *big.Int           // Timestamp of block used for simulation (Optional).
+	Timestamp        uint64             // Timestamp of block used for simulation (Optional).
 }
 
 type callBundleRequest struct {
 	RawTransactions  []hexutil.Bytes `json:"txs"`
 	BlockNumber      *hexutil.Big    `json:"blockNumber"`
 	StateBlockNumber string          `json:"stateBlockNumber"`
-	Timestamp        *big.Int        `json:"timestamp"`
+	Timestamp        uint64          `json:"timestamp,omitempty"`
 }
 
 // MarshalJSON implements the [json.Marshaler].

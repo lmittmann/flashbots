@@ -1,7 +1,6 @@
 package flashbots_test
 
 import (
-	"math/big"
 	"testing"
 
 	"github.com/lmittmann/flashbots"
@@ -17,7 +16,7 @@ func TestCallBundle(t *testing.T) {
 				RawTransactions:  [][]byte{w3.B("0x00"), w3.B("0x01")},
 				BlockNumber:      w3.I("0xb63dcd"),
 				StateBlockNumber: nil,
-				Timestamp:        big.NewInt(1615920932),
+				Timestamp:        1615920932,
 			}),
 			WantRet: flashbots.CallBundleResponse{
 				BundleGasPrice:    w3.I("476190476193"),

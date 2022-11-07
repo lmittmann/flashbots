@@ -15,16 +15,16 @@ type SendBundleRequest struct {
 	Transactions      types.Transactions // List of signed transactions to execute in a bundle.
 	RawTransactions   [][]byte           // List of signed raw transactions to execute in a bundle.
 	BlockNumber       *big.Int           // Block number for which the bundle is valid
-	MinTimestamp      *big.Int           // Minimum Unix Timestamp for which the bundle is valid
-	MaxTimestamp      *big.Int           // Maximum Unix Timestamp for which the bundle is valid
+	MinTimestamp      uint64             // Minimum Unix Timestamp for which the bundle is valid
+	MaxTimestamp      uint64             // Maximum Unix Timestamp for which the bundle is valid
 	RevertingTxHashes []common.Hash      // List of tx hashes in bundle that are allowed to revert.
 }
 
 type sendBundleRequest struct {
 	RawTransactions   []hexutil.Bytes `json:"txs"`
 	BlockNumber       *hexutil.Big    `json:"blockNumber"`
-	MinTimestamp      *hexutil.Big    `json:"minTimestamp,omitempty"`
-	MaxTimestamp      *hexutil.Big    `json:"maxTimestamp,omitempty"`
+	MinTimestamp      uint64          `json:"minTimestamp,omitempty"`
+	MaxTimestamp      uint64          `json:"maxTimestamp,omitempty"`
 	RevertingTxHashes []common.Hash   `json:"revertingTxHashes,omitempty"`
 }
 
@@ -47,9 +47,11 @@ func (s SendBundleRequest) MarshalJSON() ([]byte, error) {
 			enc.RawTransactions[i] = rawTx
 		}
 	}
-	enc.BlockNumber = (*hexutil.Big)(s.BlockNumber)
-	enc.MinTimestamp = (*hexutil.Big)(s.MinTimestamp)
-	enc.MaxTimestamp = (*hexutil.Big)(s.MaxTimestamp)
+	if s.BlockNumber != nil {
+		enc.BlockNumber = (*hexutil.Big)(s.BlockNumber)
+	}
+	enc.MinTimestamp = s.MinTimestamp
+	enc.MaxTimestamp = s.MaxTimestamp
 	enc.RevertingTxHashes = s.RevertingTxHashes
 	return json.Marshal(&enc)
 }
