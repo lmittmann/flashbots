@@ -66,6 +66,9 @@ func (auth *authRoundTripper) sign(body []byte) (string, error) {
 // Dial returns a new [w3.Client] connected to the URL rawurl that adds the
 // 'X-Flashbots-Signature' to every request. An error is returned if the
 // connection establishment failes.
+//
+// Use [w3.Dial] to connect to an RPC endpoint that does not require signed
+// requests.
 func Dial(rawurl string, prv *ecdsa.PrivateKey) (*w3.Client, error) {
 	rpcClient, err := rpc.DialHTTPWithClient(
 		rawurl,
@@ -80,6 +83,9 @@ func Dial(rawurl string, prv *ecdsa.PrivateKey) (*w3.Client, error) {
 }
 
 // MustDial is like [Dial] but panics if the connection establishment failes.
+//
+// Use [w3.MustDial] to connect to an RPC endpoint that does not require signed
+// requests.
 func MustDial(rawurl string, prv *ecdsa.PrivateKey) *w3.Client {
 	client, err := Dial(rawurl, prv)
 	if err != nil {

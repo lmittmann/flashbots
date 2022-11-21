@@ -33,12 +33,16 @@ var prv *ecdsa.PrivateKey
 // Connect to Flashbots Relay
 client := flashbots.MustDial("https://relay.flashbots.net", prv)
 defer client.Close()
+
+// Or… Connect to any RPC endpoint that does not require signed requests
+client := w3.MustDial("http://localhost:8545")
+defer client.Close()
 ```
 
 Send a bundle to the Flashbots relay.
 
 ```go
-bundle := []*types.Transaction{ /* signed transactions... */ }
+bundle := []*types.Transaction{ /* signed transactions… */ }
 
 var bundleHash common.Hash
 err := client.Call(
