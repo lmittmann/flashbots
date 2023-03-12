@@ -215,6 +215,10 @@ func (f *userStatsFactory) HandleResponse(elem rpc.BatchElem) error {
 	return nil
 }
 
+type userStatsV2Request struct {
+	BlockNumber *hexutil.Big `json:"blockNumber"`
+}
+
 type UserStatsV2Response struct {
 	IsHighPriority           bool     // True if the searcher has an high enough reputation to be in the high priority queue.
 	AllTimeValidatorPayments *big.Int // Total amount paid to validators over all time.
@@ -282,7 +286,9 @@ func (f *userStatsV2Factory) Returns(userStats *UserStatsV2Response) w3types.Cal
 func (f *userStatsV2Factory) CreateRequest() (rpc.BatchElem, error) {
 	return rpc.BatchElem{
 		Method: "flashbots_getUserStatsV2",
-		Args:   []any{hexutil.EncodeBig(f.blockNumber)},
+		Args: []any{&userStatsV2Request{
+			BlockNumber: (*hexutil.Big)(f.blockNumber),
+		}},
 		Result: f.returns,
 	}, nil
 }
