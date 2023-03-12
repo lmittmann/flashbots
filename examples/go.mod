@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/ethereum/go-ethereum v1.11.4
 	github.com/lmittmann/flashbots v0.0.0
-	github.com/lmittmann/w3 v0.10.0
+	github.com/lmittmann/w3 v0.11.0
 )
 
 replace github.com/lmittmann/flashbots => ../
