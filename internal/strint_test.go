@@ -51,6 +51,10 @@ func TestStrBigintUnmarshalJSON(t *testing.T) {
 		WantErr error
 	}{
 		{
+			JSON:    []byte(`""`),
+			WantInt: StrInt(*big.NewInt(0)),
+		},
+		{
 			JSON:    []byte(`"0"`),
 			WantInt: StrInt(*big.NewInt(0)),
 		},

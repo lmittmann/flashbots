@@ -15,8 +15,11 @@ func (i StrInt) MarshalJSON() ([]byte, error) {
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
 func (i *StrInt) UnmarshalJSON(input []byte) error {
-	if len(input) < 3 || input[0] != '"' || input[len(input)-1] != '"' {
+	if len(input) < 2 || input[0] != '"' || input[len(input)-1] != '"' {
 		return fmt.Errorf("invalid number string %s", input)
+	}
+	if len(input) == 2 {
+		return nil
 	}
 	_, ok := (*big.Int)(i).SetString(string(input[1:len(input)-1]), 10)
 	if !ok {
