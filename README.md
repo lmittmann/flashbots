@@ -70,3 +70,5 @@ List of supported RPC methods.
 | `eth_cancelPrivateTransaction` | `flashbots.CancelPrivateTx(txHash common.Hash).Returns(success *bool)`
 | `flashbots_getUserStats`       | `flashbots.UserStats(blockNumber *big.Int).Returns(resp *flashbots.UserStatsResponse)`
 | `flashbots_getBundleStats`     | `flashbots.BundleStats(bundleHash common.Hash, blockNumber *big.Int).Returns(resp *flashbots.BundleStatsResponse)`
+| `flashbots_getUserStatsV2`     | `flashbots.UserStatsV2(blockNumber *big.Int).Returns(resp *flashbots.UserStatsV2Response)`
+| `flashbots_getBundleStatsV2`   | `flashbots.BundleStatsV2(bundleHash common.Hash, blockNumber *big.Int).Returns(resp *flashbots.BundleStatsV2Response)`

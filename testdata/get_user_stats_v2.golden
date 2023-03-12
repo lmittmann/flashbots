@@ -1,0 +1,2 @@
+> {"jsonrpc":"2.0","id":1,"method":"flashbots_getUserStatsV2","params":["0x3b9ac9ff"]}
+< {"jsonrpc":"2.0","id":1,"result":{"isHighPriority":true,"allTimeValidatorPayments":"1280749594841588639","allTimeGasSimulated":"30049470846","last7dValidatorPayments":"1280749594841588639","last7dGasSimulated":"30049470846","last1dValidatorPayments":"142305510537954293","last1dGasSimulated":"2731770076"}}

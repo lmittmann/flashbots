@@ -32,9 +32,9 @@ func main() {
 	}
 
 	// fetch user statistics
-	var userStats flashbots.UserStatsResponse
+	var userStats flashbots.UserStatsV2Response
 	if err := fbClient.Call(
-		flashbots.UserStats(&latestBlock).Returns(&userStats),
+		flashbots.UserStatsV2(&latestBlock).Returns(&userStats),
 	); err != nil {
 		fmt.Printf("Failed to fetch user statistics: %v\n", err)
 		return
@@ -42,6 +42,6 @@ func main() {
 
 	// print user statistics
 	fmt.Printf("High priority: %t\n", userStats.IsHighPriority)
-	fmt.Printf("7 day fees: %s ETH\n", w3.FromWei(userStats.Last7dMinerPayments, 18))
-	fmt.Printf("Total fees: %s ETH\n", w3.FromWei(userStats.AllTimeMinerPayments, 18))
+	fmt.Printf("7 day fees: %s ETH\n", w3.FromWei(userStats.Last7dValidatorPayments, 18))
+	fmt.Printf("Total fees: %s ETH\n", w3.FromWei(userStats.AllTimeValidatorPayments, 18))
 }
