@@ -8,13 +8,7 @@ release:
 
 changelog:
   sort: asc
-  groups:
-    - title: Bug Fixes
-      regexp: fix
-      order: 1
-    - title: ''
-      regexp: .*
-      order: 0
+  use: github-native
 
 builds:
 - skip: true
