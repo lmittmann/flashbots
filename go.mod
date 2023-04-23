@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/ethereum/go-ethereum v1.11.6
-	github.com/lmittmann/w3 v0.11.1
+	github.com/lmittmann/w3 v0.11.2
 )
 
 require (
