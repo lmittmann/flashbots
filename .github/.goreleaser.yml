@@ -8,7 +8,6 @@ release:
 
 changelog:
   sort: asc
-  use: github-native
 
 builds:
 - skip: true
