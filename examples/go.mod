@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/ethereum/go-ethereum v1.13.8
 	github.com/lmittmann/flashbots v0.0.0
-	github.com/lmittmann/w3 v0.14.3
+	github.com/lmittmann/w3 v0.14.5
 )
 
 replace github.com/lmittmann/flashbots => ../
@@ -66,7 +66,7 @@ require (
 	golang.org/x/sync v0.5.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	golang.org/x/time v0.4.0 // indirect
+	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.15.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	rsc.io/tmplfunc v0.0.3 // indirect
