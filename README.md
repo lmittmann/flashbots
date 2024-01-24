@@ -18,7 +18,7 @@ go get github.com/lmittmann/flashbots
 
 ## Getting Started
 
-> **Note**
+> [!NOTE]
 > Check out the [examples](examples/)!
 
 Connect to the Flashbots relay. The [`w3.Client`](https://pkg.go.dev/github.com/lmittmann/w3#Client)
