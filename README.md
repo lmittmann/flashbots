@@ -53,7 +53,7 @@ err := client.Call(
 )
 ```
 
-> **Warning**
+> [!WARNING]
 > The Flashbots relay does not support batch requests. Thus, sending more than
 one call in `Client.Call` will result in a server error.
 
