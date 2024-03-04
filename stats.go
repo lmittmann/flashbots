@@ -16,13 +16,13 @@ import (
 // number must be within 20 blocks of the current chain tip.
 //
 // Deprecated: Use [BundleStatsV2] instead.
-func BundleStats(bundleHash common.Hash, blockNumber *big.Int) w3types.CallerFactory[BundleStatsResponse] {
+func BundleStats(bundleHash common.Hash, blockNumber *big.Int) w3types.RPCCallerFactory[BundleStatsResponse] {
 	return &bundleStatsFactory{bundleHash: bundleHash, blockNumber: blockNumber}
 }
 
 // BundleStatsV2 requests the bundles Flashbots relay stats. The given block
 // number must be within 20 blocks of the current chain tip.
-func BundleStatsV2(bundleHash common.Hash, blockNumber *big.Int) w3types.CallerFactory[BundleStatsV2Response] {
+func BundleStatsV2(bundleHash common.Hash, blockNumber *big.Int) w3types.RPCCallerFactory[BundleStatsV2Response] {
 	return &bundleStatsV2Factory{bundleHash: bundleHash, blockNumber: blockNumber}
 }
 
@@ -30,13 +30,13 @@ func BundleStatsV2(bundleHash common.Hash, blockNumber *big.Int) w3types.CallerF
 // must be within 20 blocks of the current chain tip.
 //
 // Deprecated: Use [UserStatsV2] instead.
-func UserStats(blockNumber *big.Int) w3types.CallerFactory[UserStatsResponse] {
+func UserStats(blockNumber *big.Int) w3types.RPCCallerFactory[UserStatsResponse] {
 	return &userStatsFactory{blockNumber: blockNumber}
 }
 
 // UserStatsV2 requests the users Flashbots relay stats. The given block number
 // must be within 20 blocks of the current chain tip.
-func UserStatsV2(blockNumber *big.Int) w3types.CallerFactory[UserStatsV2Response] {
+func UserStatsV2(blockNumber *big.Int) w3types.RPCCallerFactory[UserStatsV2Response] {
 	return &userStatsV2Factory{blockNumber: blockNumber}
 }
 
@@ -64,7 +64,7 @@ type bundleStatsFactory struct {
 	returns *BundleStatsResponse
 }
 
-func (f *bundleStatsFactory) Returns(bundleStats *BundleStatsResponse) w3types.Caller {
+func (f *bundleStatsFactory) Returns(bundleStats *BundleStatsResponse) w3types.RPCCaller {
 	f.returns = bundleStats
 	return f
 }
@@ -112,7 +112,7 @@ type bundleStatsV2Factory struct {
 	returns *BundleStatsV2Response
 }
 
-func (f *bundleStatsV2Factory) Returns(bundleStats *BundleStatsV2Response) w3types.Caller {
+func (f *bundleStatsV2Factory) Returns(bundleStats *BundleStatsV2Response) w3types.RPCCaller {
 	f.returns = bundleStats
 	return f
 }
@@ -195,7 +195,7 @@ type userStatsFactory struct {
 	returns *UserStatsResponse
 }
 
-func (f *userStatsFactory) Returns(userStats *UserStatsResponse) w3types.Caller {
+func (f *userStatsFactory) Returns(userStats *UserStatsResponse) w3types.RPCCaller {
 	f.returns = userStats
 	return f
 }
@@ -278,7 +278,7 @@ type userStatsV2Factory struct {
 	returns *UserStatsV2Response
 }
 
-func (f *userStatsV2Factory) Returns(userStats *UserStatsV2Response) w3types.Caller {
+func (f *userStatsV2Factory) Returns(userStats *UserStatsV2Response) w3types.RPCCaller {
 	f.returns = userStats
 	return f
 }
