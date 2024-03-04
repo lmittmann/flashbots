@@ -199,8 +199,8 @@ github.com/labstack/echo/v4 v4.5.0/go.mod h1:czIriw4a0C1dFun+ObrXp7ok03xON0N1awS
 github.com/labstack/gommon v0.3.0/go.mod h1:MULnywXg0yavhxWKc+lOruYdAhDwPK9wf0OL7NoOu+k=
 github.com/leanovate/gopter v0.2.9 h1:fQjYxZaynp97ozCzfOyOuAGOU4aU/z37zf/tOujFk7c=
 github.com/leanovate/gopter v0.2.9/go.mod h1:U2L/78B+KVFIx2VmW6onHJQzXtFb+p5y3y2Sh+Jxxv8=
-github.com/lmittmann/w3 v0.14.6 h1:KqUtYGjg6GMxT5SnA9tQJ0DmcBHfPP8D9BRpeRZ0inA=
-github.com/lmittmann/w3 v0.14.6/go.mod h1:hyTSYQBxT8MCMNMEoGnlLocyL1hgYqfUp5By22OW8qY=
+github.com/lmittmann/w3 v0.14.7 h1:DhpjNTsulKmVBGter35q9iTyd/8l+4VyXtl/bv7oN6I=
+github.com/lmittmann/w3 v0.14.7/go.mod h1:i8FMu9hIpaDJNAiNaRZ4n2pJ5EN/8xSSw45h4xBvztY=
 github.com/magiconair/properties v1.8.0/go.mod h1:PppfXfuXeibc/6YijjN8zIbojt8czPbwD3XqdrwzmxQ=
 github.com/mattn/go-colorable v0.1.2/go.mod h1:U0ppj6V5qS13XJ6of8GYAs25YV2eR4EVcfRqFIhoBtE=
 github.com/mattn/go-colorable v0.1.8/go.mod h1:u6P/XSegPjTcexA+o6vUJrdnUu04hMope9wVRipJSqc=
