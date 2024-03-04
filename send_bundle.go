@@ -61,7 +61,7 @@ type sendBundleResponse struct {
 }
 
 // SendBundle sends the bundle to the client's endpoint.
-func SendBundle(r *SendBundleRequest) w3types.CallerFactory[common.Hash] {
+func SendBundle(r *SendBundleRequest) w3types.RPCCallerFactory[common.Hash] {
 	return &sendBundleFactory{param: r}
 }
 
@@ -74,7 +74,7 @@ type sendBundleFactory struct {
 	returns *common.Hash
 }
 
-func (f *sendBundleFactory) Returns(hash *common.Hash) w3types.Caller {
+func (f *sendBundleFactory) Returns(hash *common.Hash) w3types.RPCCaller {
 	f.returns = hash
 	return f
 }

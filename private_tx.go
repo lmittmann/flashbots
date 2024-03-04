@@ -45,7 +45,7 @@ func (c SendPrivateTxRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SendPrivateTx sends a private transaction to the Flashbots relay.
-func SendPrivateTx(r *SendPrivateTxRequest) w3types.CallerFactory[common.Hash] {
+func SendPrivateTx(r *SendPrivateTxRequest) w3types.RPCCallerFactory[common.Hash] {
 	return &sendPrivateTxFactory{params: r}
 }
 
@@ -57,7 +57,7 @@ type sendPrivateTxFactory struct {
 	returns *common.Hash
 }
 
-func (f *sendPrivateTxFactory) Returns(txHash *common.Hash) w3types.Caller {
+func (f *sendPrivateTxFactory) Returns(txHash *common.Hash) w3types.RPCCaller {
 	f.returns = txHash
 	return f
 }
@@ -83,7 +83,7 @@ type cancelPrivateTxRequest struct {
 
 // CancelPrivateTx stops the private transactions with the given hash
 // from being submitted for future blocks by the Flashbots relay.
-func CancelPrivateTx(hash common.Hash) w3types.CallerFactory[bool] {
+func CancelPrivateTx(hash common.Hash) w3types.RPCCallerFactory[bool] {
 	return &cancelPrivateTxFactory{hash: hash}
 }
 
@@ -95,7 +95,7 @@ type cancelPrivateTxFactory struct {
 	returns *bool
 }
 
-func (f *cancelPrivateTxFactory) Returns(success *bool) w3types.Caller {
+func (f *cancelPrivateTxFactory) Returns(success *bool) w3types.RPCCaller {
 	f.returns = success
 	return f
 }
