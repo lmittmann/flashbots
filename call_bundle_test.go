@@ -18,7 +18,7 @@ func TestCallBundle(t *testing.T) {
 				StateBlockNumber: nil,
 				Timestamp:        1615920932,
 			}),
-			WantRet: flashbots.CallBundleResponse{
+			WantRet: &flashbots.CallBundleResponse{
 				BundleGasPrice:    w3.I("476190476193"),
 				BundleHash:        w3.H("0x73b1e258c7a42fd0230b2fd05529c5d4b6fcb66c227783f8bece8aeacdd1db2e"),
 				CoinbaseDiff:      w3.I("20000000000126000"),
