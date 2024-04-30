@@ -15,7 +15,7 @@ func TestBundleStats(t *testing.T) {
 		{
 			Golden: "get_bundle_stats",
 			Call:   flashbots.BundleStats(w3.H("0x2228f5d8954ce31dc1601a8ba264dbd401bf1428388ce88238932815c5d6f23f"), big.NewInt(999_999_999)),
-			WantRet: flashbots.BundleStatsResponse{
+			WantRet: &flashbots.BundleStatsResponse{
 				IsSimulated:    true,
 				IsSentToMiners: true,
 				IsHighPriority: true,
@@ -34,7 +34,7 @@ func TestBundleStatsV2(t *testing.T) {
 		{
 			Golden: "get_bundle_stats_v2",
 			Call:   flashbots.BundleStatsV2(w3.H("0x2228f5d8954ce31dc1601a8ba264dbd401bf1428388ce88238932815c5d6f23f"), big.NewInt(999_999_999)),
-			WantRet: flashbots.BundleStatsV2Response{
+			WantRet: &flashbots.BundleStatsV2Response{
 				IsHighPriority: true,
 				IsSimulated:    true,
 				SimulatedAt:    mustParse("2022-10-06T21:36:06.317Z"),
@@ -78,7 +78,7 @@ func TestUserStats(t *testing.T) {
 		{
 			Golden: "get_user_stats",
 			Call:   flashbots.UserStats(big.NewInt(999_999_999)),
-			WantRet: flashbots.UserStatsResponse{
+			WantRet: &flashbots.UserStatsResponse{
 				IsHighPriority:       true,
 				AllTimeMinerPayments: w3.I("1280749594841588639"),
 				AllTimeGasSimulated:  w3.I("30049470846"),
@@ -98,7 +98,7 @@ func TestUserStatsV2(t *testing.T) {
 		{
 			Golden: "get_user_stats_v2",
 			Call:   flashbots.UserStatsV2(big.NewInt(999_999_999)),
-			WantRet: flashbots.UserStatsV2Response{
+			WantRet: &flashbots.UserStatsV2Response{
 				IsHighPriority:           true,
 				AllTimeValidatorPayments: w3.I("1280749594841588639"),
 				AllTimeGasSimulated:      w3.I("30049470846"),
