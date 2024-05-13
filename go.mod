@@ -3,8 +3,8 @@ module github.com/lmittmann/flashbots
 go 1.22
 
 require (
-	github.com/ethereum/go-ethereum v1.14.0
-	github.com/lmittmann/w3 v0.16.0
+	github.com/ethereum/go-ethereum v1.14.3
+	github.com/lmittmann/w3 v0.16.1
 )
 
 require (
