@@ -3,8 +3,8 @@ module github.com/lmittmann/flashbots
 go 1.22
 
 require (
-	github.com/ethereum/go-ethereum v1.14.5
-	github.com/lmittmann/w3 v0.16.4
+	github.com/ethereum/go-ethereum v1.14.7
+	github.com/lmittmann/w3 v0.16.8
 )
 
 require (
@@ -21,7 +21,7 @@ require (
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
-	github.com/holiman/uint256 v1.2.4 // indirect
+	github.com/holiman/uint256 v1.3.0 // indirect
 	github.com/mmcloughlin/addchain v0.4.0 // indirect
 	github.com/shirou/gopsutil v3.21.4-0.20210419000835-c7a38de76ee5+incompatible // indirect
 	github.com/supranational/blst v0.3.11 // indirect
