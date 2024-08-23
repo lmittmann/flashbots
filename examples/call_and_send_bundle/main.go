@@ -34,8 +34,8 @@ func main() {
 	// fetch nonce, gas price, and latest block
 	var (
 		nonce       uint64
-		gasPrice    big.Int
-		latestBlock big.Int
+		gasPrice    *big.Int
+		latestBlock *big.Int
 	)
 	if err := client.Call(
 		eth.Nonce(addr, nil).Returns(&nonce),
@@ -49,7 +49,7 @@ func main() {
 	// build transaction
 	tx := types.MustSignNewTx(prv, signer, &types.DynamicFeeTx{
 		Nonce:     nonce,
-		GasFeeCap: &gasPrice,
+		GasFeeCap: gasPrice,
 		GasTipCap: w3.I("1 gwei"),
 		Gas:       250_000,
 		// To:     w3.APtr("0x..."),
@@ -57,11 +57,11 @@ func main() {
 	})
 
 	// call bundle
-	var callBundle flashbots.CallBundleResponse
+	var callBundle *flashbots.CallBundleResponse
 	if err := fbClient.Call(
 		flashbots.CallBundle(&flashbots.CallBundleRequest{
 			Transactions: []*types.Transaction{tx},
-			BlockNumber:  new(big.Int).Add(&latestBlock, w3.Big1),
+			BlockNumber:  new(big.Int).Add(latestBlock, w3.Big1),
 		}).Returns(&callBundle),
 	); err != nil {
 		fmt.Printf("Failed to call bundle: %v\n", err)
@@ -74,7 +74,7 @@ func main() {
 	if err := fbClient.Call(
 		flashbots.SendBundle(&flashbots.SendBundleRequest{
 			Transactions: []*types.Transaction{tx},
-			BlockNumber:  new(big.Int).Add(&latestBlock, w3.Big1),
+			BlockNumber:  new(big.Int).Add(latestBlock, w3.Big1),
 		}).Returns(&bundleHash),
 	); err != nil {
 		fmt.Printf("Failed to send bundle: %v\n", err)

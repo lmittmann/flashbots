@@ -9,7 +9,7 @@ import (
 )
 
 func TestCallBundle(t *testing.T) {
-	tests := []rpctest.TestCase[flashbots.CallBundleResponse]{
+	rpctest.RunTestCases(t, []rpctest.TestCase[*flashbots.CallBundleResponse]{
 		{
 			Golden: "call_bundle",
 			Call: flashbots.CallBundle(&flashbots.CallBundleRequest{
@@ -52,7 +52,5 @@ func TestCallBundle(t *testing.T) {
 				},
 			},
 		},
-	}
-
-	rpctest.RunTestCases(t, tests)
+	})
 }

@@ -23,7 +23,7 @@ var (
 
 func main() {
 	// fetch latest block
-	var latestBlock big.Int
+	var latestBlock *big.Int
 	if err := client.Call(
 		eth.BlockNumber().Returns(&latestBlock),
 	); err != nil {
@@ -32,9 +32,9 @@ func main() {
 	}
 
 	// fetch user statistics
-	var userStats flashbots.UserStatsV2Response
+	var userStats *flashbots.UserStatsV2Response
 	if err := fbClient.Call(
-		flashbots.UserStatsV2(&latestBlock).Returns(&userStats),
+		flashbots.UserStatsV2(latestBlock).Returns(&userStats),
 	); err != nil {
 		fmt.Printf("Failed to fetch user statistics: %v\n", err)
 		return
