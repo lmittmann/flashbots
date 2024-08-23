@@ -18,6 +18,7 @@ type SendBundleRequest struct {
 	MinTimestamp      uint64             // Minimum Unix Timestamp for which the bundle is valid
 	MaxTimestamp      uint64             // Maximum Unix Timestamp for which the bundle is valid
 	RevertingTxHashes []common.Hash      // List of tx hashes in bundle that are allowed to revert.
+	ReplacementUuid   string             // String, UUID that can be used to cancel/replace this bundle
 }
 
 type sendBundleRequest struct {
@@ -26,6 +27,7 @@ type sendBundleRequest struct {
 	MinTimestamp      uint64          `json:"minTimestamp,omitempty"`
 	MaxTimestamp      uint64          `json:"maxTimestamp,omitempty"`
 	RevertingTxHashes []common.Hash   `json:"revertingTxHashes,omitempty"`
+	ReplacementUuid   string          `json:"replacementUuid,omitempty"`
 }
 
 // MarshalJSON implements the [json.Marshaler].
@@ -53,6 +55,7 @@ func (s SendBundleRequest) MarshalJSON() ([]byte, error) {
 	enc.MinTimestamp = s.MinTimestamp
 	enc.MaxTimestamp = s.MaxTimestamp
 	enc.RevertingTxHashes = s.RevertingTxHashes
+	enc.ReplacementUuid = s.ReplacementUuid
 	return json.Marshal(&enc)
 }
 
