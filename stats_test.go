@@ -41,7 +41,6 @@ func TestBundleStatsV2(t *testing.T) {
 					Pubkey    string
 					Timestamp time.Time
 				}{
-
 					{
 						Pubkey:    "0x81babeec8c9f2bb9c329fd8a3b176032fe0ab5f3b92a3f44d4575a231c7bd9c31d10b6328ef68ed1e8c02a3dbc8e80f9",
 						Timestamp: mustParseTime("2022-10-06T21:36:06.343Z"),

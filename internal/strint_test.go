@@ -44,6 +44,7 @@ func TestStrBigintMarshalJSON(t *testing.T) {
 		})
 	}
 }
+
 func TestStrBigintUnmarshalJSON(t *testing.T) {
 	tests := []struct {
 		JSON    []byte
