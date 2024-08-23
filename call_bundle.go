@@ -175,7 +175,7 @@ func (c *CallBundleResponse) UnmarshalJSON(input []byte) error {
 }
 
 // CallBundle simulates a bundle.
-func CallBundle(r *CallBundleRequest) w3types.RPCCallerFactory[CallBundleResponse] {
+func CallBundle(r *CallBundleRequest) w3types.RPCCallerFactory[*CallBundleResponse] {
 	return &callBundleFactory{param: r}
 }
 
@@ -184,10 +184,10 @@ type callBundleFactory struct {
 	param *CallBundleRequest
 
 	// returns
-	returns *CallBundleResponse
+	returns **CallBundleResponse
 }
 
-func (f *callBundleFactory) Returns(resp *CallBundleResponse) w3types.RPCCaller {
+func (f *callBundleFactory) Returns(resp **CallBundleResponse) w3types.RPCCaller {
 	f.returns = resp
 	return f
 }

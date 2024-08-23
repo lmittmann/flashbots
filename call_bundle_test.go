@@ -9,7 +9,7 @@ import (
 )
 
 func TestCallBundle(t *testing.T) {
-	tests := []rpctest.TestCase[flashbots.CallBundleResponse]{
+	rpctest.RunTestCases(t, []rpctest.TestCase[*flashbots.CallBundleResponse]{
 		{
 			Golden: "call_bundle",
 			Call: flashbots.CallBundle(&flashbots.CallBundleRequest{
@@ -31,7 +31,7 @@ func TestCallBundle(t *testing.T) {
 						CoinbaseDiff:      w3.I("10000000000063000"),
 						EthSentToCoinbase: w3.I("10000000000000000"),
 						FromAddress:       w3.A("0x02A727155aeF8609c9f7F2179b2a1f560B39F5A0"),
-						GasFees:           w3.I("63000"), //XXX
+						GasFees:           w3.I("63000"), // XXX
 						GasPrice:          w3.I("476190476193"),
 						GasUsed:           21000,
 						ToAddress:         w3.APtr("0x73625f59CAdc5009Cb458B751b3E7b6b48C06f2C"),
@@ -52,7 +52,5 @@ func TestCallBundle(t *testing.T) {
 				},
 			},
 		},
-	}
-
-	rpctest.RunTestCases(t, tests)
+	})
 }
