@@ -8,6 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/rpc"
+	"github.com/google/uuid"
 	"github.com/lmittmann/w3/w3types"
 )
 
@@ -18,7 +19,7 @@ type SendBundleRequest struct {
 	MinTimestamp      uint64             // Minimum Unix Timestamp for which the bundle is valid
 	MaxTimestamp      uint64             // Maximum Unix Timestamp for which the bundle is valid
 	RevertingTxHashes []common.Hash      // List of tx hashes in bundle that are allowed to revert.
-	ReplacementUuid   string             // String, UUID that can be used to cancel/replace this bundle
+	ReplacementUuid   uuid.UUID          // UUID that can be used to cancel/replace this bundle
 }
 
 type sendBundleRequest struct {
@@ -27,7 +28,7 @@ type sendBundleRequest struct {
 	MinTimestamp      uint64          `json:"minTimestamp,omitempty"`
 	MaxTimestamp      uint64          `json:"maxTimestamp,omitempty"`
 	RevertingTxHashes []common.Hash   `json:"revertingTxHashes,omitempty"`
-	ReplacementUuid   string          `json:"replacementUuid,omitempty"`
+	ReplacementUuid   uuid.UUID       `json:"replacementUuid,omitempty"`
 }
 
 // MarshalJSON implements the [json.Marshaler].
