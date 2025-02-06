@@ -3,9 +3,9 @@ module github.com/lmittmann/flashbots
 go 1.22
 
 require (
-	github.com/ethereum/go-ethereum v1.14.12
+	github.com/ethereum/go-ethereum v1.14.13
 	github.com/google/uuid v1.6.0
-	github.com/lmittmann/w3 v0.17.2
+	github.com/lmittmann/w3 v0.17.6
 )
 
 require (
@@ -33,6 +33,6 @@ require (
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.22.0 // indirect
-	golang.org/x/time v0.8.0 // indirect
+	golang.org/x/time v0.10.0 // indirect
 	rsc.io/tmplfunc v0.0.3 // indirect
 )
