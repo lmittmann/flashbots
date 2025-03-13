@@ -1,13 +1,13 @@
 module examples
 
-go 1.22.0
+go 1.23.0
 
-toolchain go1.23.4
+toolchain go1.24.0
 
 require (
-	github.com/ethereum/go-ethereum v1.15.0
+	github.com/ethereum/go-ethereum v1.15.5
 	github.com/lmittmann/flashbots v0.0.0
-	github.com/lmittmann/w3 v0.17.7
+	github.com/lmittmann/w3 v0.19.1
 )
 
 replace github.com/lmittmann/flashbots => ../
@@ -30,13 +30,12 @@ require (
 	github.com/holiman/uint256 v1.3.2 // indirect
 	github.com/mmcloughlin/addchain v0.4.0 // indirect
 	github.com/shirou/gopsutil v3.21.4-0.20210419000835-c7a38de76ee5+incompatible // indirect
-	github.com/supranational/blst v0.3.13 // indirect
+	github.com/supranational/blst v0.3.14 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
 	golang.org/x/crypto v0.32.0 // indirect
-	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.29.0 // indirect
-	golang.org/x/time v0.10.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/time v0.11.0 // indirect
 	rsc.io/tmplfunc v0.0.3 // indirect
 )
