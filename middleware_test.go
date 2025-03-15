@@ -44,7 +44,7 @@ func BenchmarkSign(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		if _, err := authRT.sign(body); err != nil {
-			b.Fatalf("Faild to sign body: %v", err)
+			b.Fatalf("Failed to sign body: %v", err)
 		}
 	}
 }
