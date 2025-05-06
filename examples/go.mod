@@ -2,8 +2,6 @@ module examples
 
 go 1.23.0
 
-toolchain go1.24.0
-
 require (
 	github.com/ethereum/go-ethereum v1.15.11
 	github.com/lmittmann/flashbots v0.0.0
